@@ -1,11 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const makePost = () => {
+    console.log("making post")
+    fetch("https://dummyjson.com/products/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: "BMW Pencil",
+        /* other product data */
+      }),
+    })
+      .then((res) => res.json())
+      .then(console.log);
+  };
   return (
     <>
       <div>
@@ -18,8 +29,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button id="postRequestButton" onClick={makePost}>
+          Make a post request
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -29,7 +40,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

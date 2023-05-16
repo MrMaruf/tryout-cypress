@@ -1,9 +1,18 @@
-import React from 'react'
-import App from './App'
+import React from "react";
+import App from "./App";
 
-describe('<App />', () => {
-  it('renders', () => {
+describe("<App />", () => {
+  it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<App />)
-  })
-})
+    // Define the url to spy on and intercept on call
+    cy.intercept({
+      method: "POST",
+      url: "https://dummyjson.com/products/add",
+    }).as("testPost");
+
+
+    cy.mount(<App />);
+    cy.get("#postRequestButton").click();
+    cy.wait(['@testPost'])
+  });
+});
